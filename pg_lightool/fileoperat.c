@@ -96,7 +96,7 @@ getFirstXlogFile(char *waldir)
 			}
 			else if(brc.parserPri.timeline != everytimeline)
 			{
-				br_error("You should not keep muti timeline in walfile");
+				br_error("could not stat file \"%s\"\n", fullpath);
 			}
 			if(0 == segmin)
 			{
@@ -233,7 +233,7 @@ replaceFileBlock(char* filePath, uint32 blknoIneveryFile, Page page)
 
 	br_elog("    BlockRecover:file->%s,page:%u",filePath,blknoIneveryFile);
 	fseek(fp, 0, SEEK_SET);
-	fseek(fp, (blknoIneveryFile - 1) * BLCKSZ, SEEK_CUR);
+	fseek(fp, blknoIneveryFile * BLCKSZ, SEEK_CUR);
 	fwrite(page, BLCKSZ, 1, fp);
 	 
 
